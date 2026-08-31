@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 app = FastAPI()
 nacos = FastAPINacos(
@@ -18,4 +18,3 @@ nacos = FastAPINacos(
 @app.get("/status")
 async def status():
     return nacos.get_status(app)
-

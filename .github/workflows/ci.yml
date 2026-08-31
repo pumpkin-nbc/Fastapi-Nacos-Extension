@@ -16,8 +16,8 @@ jobs:
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev]"
-      - run: python -m ruff check fastapi_nacos tests examples scripts
-      - run: python -m mypy fastapi_nacos
+      - run: python -m ruff check fastapi_nacos_extension tests examples scripts
+      - run: python -m mypy fastapi_nacos_extension
       - run: python scripts/check_versions.py
       - run: python -m pytest
 
@@ -40,7 +40,7 @@ jobs:
           "fastapi==${{ matrix.fastapi }}"
           "nacos-sdk-python==${{ matrix.nacos-sdk }}"
       - run: python -m pytest
-      - run: python -c "import fastapi, nacos, fastapi_nacos; print(fastapi.__version__, nacos.__file__, fastapi_nacos.__version__)"
+      - run: python -c "import fastapi, nacos, fastapi_nacos_extension; print(fastapi.__version__, nacos.__file__, fastapi_nacos_extension.__version__)"
 
   build:
     runs-on: ubuntu-latest
@@ -56,11 +56,11 @@ jobs:
       - run: python -m twine check dist/*
       - run: python scripts/check_archives.py
       - run: python -m venv .smoke-venv
-      - run: .smoke-venv/bin/python -m pip install dist/fastapi_nacos-0.1.0-py3-none-any.whl
+      - run: .smoke-venv/bin/python -m pip install dist/fastapi_nacos_extension-0.1.0-py3-none-any.whl
       - run: .smoke-venv/bin/python scripts/smoke_import.py
       - uses: actions/upload-artifact@v4
         with:
-          name: fastapi-nacos-0.1.0
+          name: fastapi-nacos-extension-0.1.0
           path: dist/*
 
   required:
@@ -75,4 +75,3 @@ jobs:
           COMPATIBILITY: ${{ needs.compatibility.result }}
           BUILD: ${{ needs.build.result }}
         run: test "$QUALITY" = success -a "$COMPATIBILITY" = success -a "$BUILD" = success
-

@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional
 
 from .exceptions import NacosValidationError
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 _TRUE_VALUES = {"1", "true", "yes", "on", "y", "t"}
 _FALSE_VALUES = {"0", "false", "no", "off", "n", "f", ""}
@@ -237,5 +237,4 @@ __all__ = [
     "validate_metadata",
     "mask_sensitive",
 ]
-
 

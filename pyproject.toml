@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27,<1.28"]
 build-backend = "hatchling.build"
 
 [project]
-name = "fastapi-nacos"
+name = "fastapi-nacos-extension"
 version = "0.1.0"
 description = "A production-oriented FastAPI extension for Nacos 2.x service discovery and configuration."
 readme = "README.md"
@@ -51,13 +51,13 @@ Issues = "https://github.com/pumpkin-nbc/Fastapi-Nacos/issues"
 Changelog = "https://github.com/pumpkin-nbc/Fastapi-Nacos/blob/master/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
-packages = ["fastapi_nacos"]
+packages = ["fastapi_nacos_extension"]
 core-metadata-version = "2.3"
 
 [tool.hatch.build.targets.sdist]
 core-metadata-version = "2.3"
 include = [
-  "/fastapi_nacos",
+  "/fastapi_nacos_extension",
   "/tests",
   "/examples",
   "/scripts",
@@ -81,14 +81,14 @@ ignore = ["B904"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q --cov=fastapi_nacos --cov-report=term-missing"
+addopts = "-q --cov=fastapi_nacos_extension --cov-report=term-missing"
 markers = [
   "integration: opt-in tests requiring an external non-production Nacos server",
 ]
 
 [tool.coverage.run]
 branch = true
-source = ["fastapi_nacos"]
+source = ["fastapi_nacos_extension"]
 
 [tool.coverage.report]
 show_missing = true

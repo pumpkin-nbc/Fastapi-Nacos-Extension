@@ -1,7 +1,7 @@
 """Service registration, deregistration and discovery helpers.
 
 Each helper operates on a plain ``(client, config)`` pair and raises the
-relevant :mod:`fastapi_nacos.exceptions` error on failure. Fail-fast versus
+relevant :mod:`fastapi_nacos_extension.exceptions` error on failure. Fail-fast versus
 log-only handling is decided by the caller (the extension).
 """
 
@@ -18,7 +18,7 @@ from .exceptions import (
 )
 from .utils import get_local_ip
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 
 def resolve_instance_identity(config: Dict[str, Any]) -> Dict[str, Any]:
@@ -253,5 +253,4 @@ __all__ = [
     "list_instances",
     "get_one_healthy_instance",
 ]
-
 

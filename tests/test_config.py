@@ -2,8 +2,8 @@
 
 import pytest
 
-from fastapi_nacos import FastAPINacos, NacosConfigError, NacosValidationError
-from fastapi_nacos.config import (
+from fastapi_nacos_extension import FastAPINacos, NacosConfigError, NacosValidationError
+from fastapi_nacos_extension.config import (
     DEFAULTS,
     load_config,
     validate_connection_config,

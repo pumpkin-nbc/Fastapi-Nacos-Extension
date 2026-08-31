@@ -6,9 +6,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import fastapi_nacos.logging as nlog
-from fastapi_nacos import NacosLoggingError
-from fastapi_nacos.config import load_config
+import fastapi_nacos_extension.logging as nlog
+from fastapi_nacos_extension import NacosLoggingError
+from fastapi_nacos_extension.config import load_config
 
 
 @pytest.fixture(autouse=True)
@@ -42,7 +42,7 @@ def owned(logger, kind):
     return [
         handler
         for handler in logger.handlers
-        if getattr(handler, "_fastapi_nacos_handler_type", None) == kind
+        if getattr(handler, "_fastapi_nacos_extension_handler_type", None) == kind
     ]
 
 

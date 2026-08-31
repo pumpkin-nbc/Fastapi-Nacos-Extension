@@ -6,15 +6,15 @@ from unittest.mock import MagicMock
 import nacos
 import pytest
 
-from fastapi_nacos import NacosClientError, NacosLoggingError
-from fastapi_nacos.client import (
+from fastapi_nacos_extension import NacosClientError, NacosLoggingError
+from fastapi_nacos_extension.client import (
     _extract_heartbeat_identity,
     _install_heartbeat_instrumentation,
     _set_heartbeat_observer,
     create_client,
 )
-from fastapi_nacos.config import load_config
-from fastapi_nacos.logging import (
+from fastapi_nacos_extension.config import load_config
+from fastapi_nacos_extension.logging import (
     SDK_LOGGER_NAMES,
     configure_logger,
     get_log_level,
@@ -105,7 +105,7 @@ def test_invalid_log_level(value):
 
 def test_logging_disabled_and_sdk_loggers_are_silenced():
     configure_logger(None, load_config({"NACOS_LOG_ENABLED": False}))
-    package_logger = logging.getLogger("fastapi_nacos")
+    package_logger = logging.getLogger("fastapi_nacos_extension")
     assert package_logger.disabled is True
     for name in SDK_LOGGER_NAMES:
         sdk_logger = logging.getLogger(name)

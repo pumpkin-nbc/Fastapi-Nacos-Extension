@@ -5,7 +5,7 @@ from pathlib import Path
 
 import tomli
 
-from fastapi_nacos import __version__
+from fastapi_nacos_extension import __version__
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -29,4 +29,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

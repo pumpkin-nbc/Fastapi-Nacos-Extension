@@ -16,7 +16,7 @@ from .utils import (
     validate_weight,
 )
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 DEFAULTS: Dict[str, Any] = {
     # Whether Nacos is enabled at all.

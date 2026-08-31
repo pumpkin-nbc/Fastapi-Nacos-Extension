@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Optional
 from .exceptions import NacosDiscoveryError
 from .utils import to_bool
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 SUPPORTED_STRATEGIES = ("first", "random", "weight")
 
@@ -230,5 +230,4 @@ __all__ = [
     "select_instance",
     "SUPPORTED_STRATEGIES",
 ]
-
 

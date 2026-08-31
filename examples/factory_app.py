@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 nacos = FastAPINacos(config={"NACOS_SERVER_ADDR": "127.0.0.1:8848"})
 
@@ -22,4 +22,3 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
-

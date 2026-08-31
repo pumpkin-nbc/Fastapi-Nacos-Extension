@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 app = FastAPI()
 nacos = FastAPINacos(app, {"NACOS_AUTO_REGISTER": False})
@@ -24,4 +24,3 @@ async def one_payment():
     return await nacos.get_one_healthy_instance(
         app, "payments-api", strategy="weight"
     )
-

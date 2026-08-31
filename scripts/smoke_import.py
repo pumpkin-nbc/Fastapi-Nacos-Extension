@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 
-from fastapi_nacos import FastAPINacos, __version__
+from fastapi_nacos_extension import FastAPINacos, __version__
 
 
 def main() -> None:
@@ -11,7 +11,7 @@ def main() -> None:
     assert __version__ == "0.1.0"
     assert extension.get_cached_client(app) is None
     assert extension.get_status(app)["enabled"] is False
-    print(f"fastapi-nacos {__version__} smoke import passed")
+    print(f"fastapi-nacos-extension {__version__} smoke import passed")
 
 
 if __name__ == "__main__":

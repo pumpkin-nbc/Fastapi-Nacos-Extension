@@ -8,9 +8,9 @@ from fastapi import FastAPI
 if TYPE_CHECKING:
     from .extension import FastAPINacos
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
-HEALTH_ENDPOINT = "fastapi_nacos_health"
+HEALTH_ENDPOINT = "fastapi_nacos_extension_health"
 
 
 def build_health_payload(

@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional
 from .exceptions import NacosConfigError, NacosValidationError
 from .utils import validate_request_timeout
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 
 def get_config(
@@ -54,4 +54,3 @@ def get_config(
 
 
 __all__ = ["get_config"]
-

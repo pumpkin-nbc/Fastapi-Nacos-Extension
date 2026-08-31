@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI, Response
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 app = FastAPI()
 nacos = FastAPINacos(
@@ -19,4 +19,3 @@ nacos = FastAPINacos(
 async def configuration():
     content = await nacos.get_config(app)
     return Response(content=content or "", media_type="text/plain")
-

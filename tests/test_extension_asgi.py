@@ -8,8 +8,8 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from fastapi_nacos import FastAPINacos, FastAPINacosError, NacosValidationError
-from fastapi_nacos.health import HEALTH_ENDPOINT
+from fastapi_nacos_extension import FastAPINacos, FastAPINacosError, NacosValidationError
+from fastapi_nacos_extension.health import HEALTH_ENDPOINT
 from tests.helpers import wait_registered, wait_until
 
 STATUS_FIELDS = {

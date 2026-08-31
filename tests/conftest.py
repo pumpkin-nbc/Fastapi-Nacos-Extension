@@ -5,8 +5,8 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi import FastAPI
 
-import fastapi_nacos.extension as extension_module
-import fastapi_nacos.retry as retry_module
+import fastapi_nacos_extension.extension as extension_module
+import fastapi_nacos_extension.retry as retry_module
 
 
 @pytest.fixture(autouse=True)
@@ -84,4 +84,3 @@ def make_app(base_config):
         return FastAPI(lifespan=lifespan), config
 
     return factory
-

@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 app = FastAPI(title="FastAPI-Nacos basic example")
 nacos = FastAPINacos(
@@ -20,4 +20,3 @@ nacos = FastAPINacos(
 @app.get("/")
 async def index():
     return {"service": "basic-api", "nacos": nacos.get_status(app)}
-

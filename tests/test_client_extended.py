@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import fastapi_nacos.client as client_module
+import fastapi_nacos_extension.client as client_module
 
 
 @pytest.mark.parametrize(
@@ -106,4 +106,3 @@ def test_client_without_heartbeat_is_supported():
     client = object()
     assert client_module._install_heartbeat_instrumentation(client) is None
     assert client_module._set_heartbeat_observer(client, None) is False
-

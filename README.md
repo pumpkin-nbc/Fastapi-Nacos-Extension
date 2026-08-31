@@ -2,14 +2,14 @@
 
 [中文说明](README.zh-CN.md) · [Documentation](docs/quickstart.md) · [Changelog](CHANGELOG.md)
 
-`fastapi-nacos` 0.1.0 is a typed, production-oriented FastAPI integration for
+`fastapi-nacos-extension` 0.1.0 is a typed, production-oriented FastAPI integration for
 Nacos 2.x. It provides process-safe service registration, discovery, raw
 configuration reads, local health status, bounded shutdown deregistration and
 post-fork recovery without blocking the ASGI event loop.
 
-> This repository is unrelated to the project of the same name on public
-> PyPI. Install it from source, a GitHub Release wheel, or a private index.
-> Public PyPI publishing is intentionally not configured.
+> The distribution name is `fastapi-nacos-extension` and the import package is
+> `fastapi_nacos_extension`. This project is unrelated to the existing public
+> PyPI distribution named `fastapi-nacos`.
 
 ## Compatibility
 
@@ -20,10 +20,16 @@ post-fork recovery without blocking the ASGI event loop.
 
 ## Installation
 
+From PyPI after the first public release:
+
+```bash
+python -m pip install fastapi-nacos-extension
+```
+
 From a release wheel:
 
 ```bash
-python -m pip install ./fastapi_nacos-0.1.0-py3-none-any.whl
+python -m pip install ./fastapi_nacos_extension-0.1.0-py3-none-any.whl
 ```
 
 From a local checkout:
@@ -36,7 +42,7 @@ python -m pip install .
 
 ```python
 from fastapi import FastAPI
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 app = FastAPI()
 nacos = FastAPINacos(
@@ -124,8 +130,8 @@ response and never contacts Nacos.
 Use the repository environment and run the complete gate:
 
 ```bash
-.venv/Scripts/python -m ruff check fastapi_nacos tests examples scripts
-.venv/Scripts/python -m mypy fastapi_nacos
+.venv/Scripts/python -m ruff check fastapi_nacos_extension tests examples scripts
+.venv/Scripts/python -m mypy fastapi_nacos_extension
 .venv/Scripts/python -m pytest
 .venv/Scripts/python -m build
 .venv/Scripts/python -m twine check dist/*

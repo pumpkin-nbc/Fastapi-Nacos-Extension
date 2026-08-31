@@ -12,7 +12,7 @@ from typing import Any, Callable, Dict, Optional, Tuple
 from .exceptions import NacosClientError
 from .logging import configure_sdk_loggers
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 _HEARTBEAT_PARAMETER_NAMES = (
     "service_name",
@@ -28,7 +28,7 @@ _HEARTBEAT_DEFAULT_GROUP = "DEFAULT_GROUP"
 _HEARTBEAT_DEFAULT_CLUSTER = None
 _HEARTBEAT_WARNING_INTERVAL_SECONDS = 60.0
 _HEARTBEAT_UNKNOWN = "<unknown>"
-_HEARTBEAT_INSTRUMENTATION_ATTRIBUTE = "_fastapi_nacos_heartbeat_instrumentation"
+_HEARTBEAT_INSTRUMENTATION_ATTRIBUTE = "_fastapi_nacos_extension_heartbeat_instrumentation"
 
 _HeartbeatIdentity = Tuple[str, str, Optional[str], str, int]
 _HeartbeatFailureType = Tuple[str, str]
@@ -429,4 +429,3 @@ def create_client(config: Dict[str, Any]) -> Any:
 
 
 __all__ = ["create_client"]
-

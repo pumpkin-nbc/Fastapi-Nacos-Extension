@@ -4,21 +4,21 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from fastapi_nacos import (
+from fastapi_nacos_extension import (
     NacosConfigError,
     NacosDeregistrationError,
     NacosDiscoveryError,
     NacosRegistrationError,
     NacosValidationError,
 )
-from fastapi_nacos.config import load_config
-from fastapi_nacos.config_center import get_config
-from fastapi_nacos.naming import (
+from fastapi_nacos_extension.config import load_config
+from fastapi_nacos_extension.config_center import get_config
+from fastapi_nacos_extension.naming import (
     deregister_instance,
     register_instance,
     resolve_instance_identity,
 )
-from fastapi_nacos.retry import run_with_retry
+from fastapi_nacos_extension.retry import run_with_retry
 
 
 def registration_config(**overrides):
@@ -112,7 +112,7 @@ def test_config_center_validation_and_sdk_failure():
 def test_retry_success_exhaustion_disabled_and_validation(monkeypatch):
     attempts = []
     sleeps = []
-    monkeypatch.setattr("fastapi_nacos.retry._sleep", sleeps.append)
+    monkeypatch.setattr("fastapi_nacos_extension.retry._sleep", sleeps.append)
 
     def eventually():
         attempts.append(1)
@@ -149,11 +149,10 @@ def test_retry_success_exhaustion_disabled_and_validation(monkeypatch):
 
 
 def test_discovery_sdk_exception_has_sanitized_contract():
-    from fastapi_nacos.naming import list_instances
+    from fastapi_nacos_extension.naming import list_instances
 
     client = MagicMock()
     client.list_naming_instance.side_effect = RuntimeError("token=secret")
     with pytest.raises(NacosDiscoveryError) as caught:
         list_instances(client, load_config(), "orders")
     assert "token=secret" not in str(caught.value)
-

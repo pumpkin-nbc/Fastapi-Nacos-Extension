@@ -8,9 +8,9 @@ from unittest.mock import MagicMock
 import nacos.exception
 import pytest
 
-import fastapi_nacos._recovery as recovery_module
-from fastapi_nacos import NacosConfigError
-from fastapi_nacos._recovery import (
+import fastapi_nacos_extension._recovery as recovery_module
+from fastapi_nacos_extension import NacosConfigError
+from fastapi_nacos_extension._recovery import (
     _classify_lifecycle_failure,
     _LifecycleFailureClass,
     _LifecycleFailureStage,

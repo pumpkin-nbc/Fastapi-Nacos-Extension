@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from fastapi_nacos import NacosValidationError, utils
+from fastapi_nacos_extension import NacosValidationError, utils
 
 
 @pytest.mark.parametrize(
@@ -117,4 +117,3 @@ def test_local_ip_primary_fallback_and_failure(monkeypatch):
     assert utils.get_host_ip() == "127.0.0.1"
     with pytest.raises(NacosValidationError, match="auto-detect"):
         utils.get_local_ip(raise_on_failure=True)
-

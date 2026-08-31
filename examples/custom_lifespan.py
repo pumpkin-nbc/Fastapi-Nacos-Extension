@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 
 @asynccontextmanager
@@ -23,4 +23,3 @@ nacos = FastAPINacos(
         "NACOS_SERVICE_PORT": 8002,
     },
 )
-

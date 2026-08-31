@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Optional
 
 from .exceptions import NacosLoggingError
 
-FASTAPI_NACOS_LOGGER_NAME = "fastapi_nacos"
+FASTAPI_NACOS_LOGGER_NAME = "fastapi_nacos_extension"
 SDK_LOGGER_NAMES = ("nacos", "nacos.client", "nacos-sdk-python")
 
 DEFAULT_SDK_LOG_PATH = os.path.abspath(
@@ -71,7 +71,9 @@ def _make_formatter(fmt: Any) -> logging.Formatter:
     try:
         formatter = logging.Formatter(fmt)
         formatter.format(
-            logging.LogRecord("fastapi_nacos", logging.INFO, __file__, 0, "check", None, None)
+            logging.LogRecord(
+                "fastapi_nacos_extension", logging.INFO, __file__, 0, "check", None, None
+            )
         )
         return formatter
     except Exception as exc:
@@ -168,16 +170,16 @@ def validate_logging_config(cfg: Dict[str, Any]) -> None:
 
 
 def _is_owned(handler: logging.Handler) -> bool:
-    return bool(getattr(handler, "_fastapi_nacos_handler", False))
+    return bool(getattr(handler, "_fastapi_nacos_extension_handler", False))
 
 
 def _handler_type(handler: logging.Handler) -> Optional[str]:
-    return getattr(handler, "_fastapi_nacos_handler_type", None)
+    return getattr(handler, "_fastapi_nacos_extension_handler_type", None)
 
 
 def _mark_owned(handler: logging.Handler, kind: str) -> logging.Handler:
-    handler._fastapi_nacos_handler = True  # type: ignore[attr-defined]
-    handler._fastapi_nacos_handler_type = kind  # type: ignore[attr-defined]
+    handler._fastapi_nacos_extension_handler = True  # type: ignore[attr-defined]
+    handler._fastapi_nacos_extension_handler_type = kind  # type: ignore[attr-defined]
     return handler
 
 
@@ -224,7 +226,7 @@ def _create_file_handler(
     else:
         handler = logging.FileHandler(log_file, encoding="utf-8")
     _mark_owned(handler, "file")
-    handler._fastapi_nacos_log_file = log_file  # type: ignore[attr-defined]
+    handler._fastapi_nacos_extension_log_file = log_file  # type: ignore[attr-defined]
     handler.setLevel(level)
     handler.setFormatter(formatter)
     return handler
@@ -241,7 +243,7 @@ def add_file_handler_once(
     """Attach or update one owned file handler for ``log_file``."""
     resolved = os.path.abspath(os.path.expanduser(str(log_file)))
     for handler in logger.handlers:
-        if getattr(handler, "_fastapi_nacos_log_file", None) == resolved:
+        if getattr(handler, "_fastapi_nacos_extension_log_file", None) == resolved:
             handler.setLevel(level)
             handler.setFormatter(formatter)
             return True
@@ -381,4 +383,3 @@ __all__ = [
     "add_file_handler_once",
     "ensure_null_handler",
 ]
-

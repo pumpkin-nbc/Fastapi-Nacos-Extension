@@ -8,9 +8,9 @@ from types import SimpleNamespace
 
 import pytest
 
-import fastapi_nacos.extension as extension_module
-from fastapi_nacos import FastAPINacos, NacosValidationError
-from fastapi_nacos._recovery import _LifecycleFailureStage
+import fastapi_nacos_extension.extension as extension_module
+from fastapi_nacos_extension import FastAPINacos, NacosValidationError
+from fastapi_nacos_extension._recovery import _LifecycleFailureStage
 from tests.helpers import wait_registered, wait_until
 
 
@@ -251,4 +251,3 @@ def test_status_is_available_during_blocked_rpc(
     assert status["registered"] is False
     release.set()
     wait_registered(extension, app)
-

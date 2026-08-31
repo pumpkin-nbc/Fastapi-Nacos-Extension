@@ -19,14 +19,14 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev]"
       - run: python scripts/check_versions.py
-      - run: python -m ruff check fastapi_nacos tests examples scripts
-      - run: python -m mypy fastapi_nacos
+      - run: python -m ruff check fastapi_nacos_extension tests examples scripts
+      - run: python -m mypy fastapi_nacos_extension
       - run: python -m pytest
       - run: python -m build
       - run: python -m twine check dist/*
       - run: python scripts/check_archives.py
       - run: python -m venv .release-smoke-venv
-      - run: .release-smoke-venv/bin/python -m pip install dist/fastapi_nacos-0.1.0-py3-none-any.whl
+      - run: .release-smoke-venv/bin/python -m pip install dist/fastapi_nacos_extension-0.1.0-py3-none-any.whl
       - run: .release-smoke-venv/bin/python scripts/smoke_import.py
       - uses: softprops/action-gh-release@v2
         with:

@@ -2,9 +2,11 @@
 
 [English](README.md) · [中文文档](docs/quickstart.zh-CN.md) · [更新日志](CHANGELOG.zh-CN.md)
 
-`fastapi-nacos` 0.1.0 是面向生产环境的 FastAPI / Nacos 2.x 类型化插件，提供服务注册与注销、服务发现、配置中心原文读取、本地健康状态、有界优雅关闭以及 fork 后恢复。所有同步 Nacos SDK 调用均在线程池中执行，不阻塞 ASGI 事件循环。
+`fastapi-nacos-extension` 0.1.0 是面向生产环境的 FastAPI / Nacos 2.x 类型化插件，提供服务注册与注销、服务发现、配置中心原文读取、本地健康状态、有界优雅关闭以及 fork 后恢复。所有同步 Nacos SDK 调用均在线程池中执行，不阻塞 ASGI 事件循环。
 
-> 本仓库与公共 PyPI 上的同名项目无关。请通过本地源码、GitHub Release wheel 或私有索引安装；项目不会配置公共 PyPI 上传。
+> PyPI 发行名为 `fastapi-nacos-extension`，Python 导入名为
+> `fastapi_nacos_extension`。本项目与公共 PyPI 上已有的
+> `fastapi-nacos` 项目无关。
 
 ## 兼容范围
 
@@ -15,8 +17,16 @@
 
 ## 安装
 
+首次发布到 PyPI 后可执行：
+
 ```bash
-python -m pip install ./fastapi_nacos-0.1.0-py3-none-any.whl
+python -m pip install fastapi-nacos-extension
+```
+
+也可以安装 GitHub Release wheel：
+
+```bash
+python -m pip install ./fastapi_nacos_extension-0.1.0-py3-none-any.whl
 ```
 
 或在源码目录执行 `python -m pip install .`。
@@ -25,7 +35,7 @@ python -m pip install ./fastapi_nacos-0.1.0-py3-none-any.whl
 
 ```python
 from fastapi import FastAPI
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 app = FastAPI()
 nacos = FastAPINacos(

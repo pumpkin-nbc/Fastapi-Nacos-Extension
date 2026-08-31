@@ -5,14 +5,14 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from fastapi_nacos import NacosDiscoveryError, NacosValidationError
-from fastapi_nacos.discovery import (
+from fastapi_nacos_extension import NacosDiscoveryError, NacosValidationError
+from fastapi_nacos_extension.discovery import (
     extract_instances,
     filter_instances,
     normalize_instance,
     select_instance,
 )
-from fastapi_nacos.naming import list_instances
+from fastapi_nacos_extension.naming import list_instances
 
 
 @pytest.mark.parametrize(
@@ -76,9 +76,9 @@ def test_filter_and_selection_strategies():
     ]
     assert filter_instances(instances, "BLUE", {"zone": "east"}) == [instances[0]]
     assert select_instance(instances, "first") is instances[0]
-    with patch("fastapi_nacos.discovery.random.choice", return_value=instances[1]):
+    with patch("fastapi_nacos_extension.discovery.random.choice", return_value=instances[1]):
         assert select_instance(instances, "random") is instances[1]
-    with patch("fastapi_nacos.discovery.random.choices", return_value=[instances[1]]):
+    with patch("fastapi_nacos_extension.discovery.random.choices", return_value=[instances[1]]):
         assert select_instance(instances, "weight") is instances[1]
     assert select_instance([], "first") is None
     assert select_instance([dict(instances[0])], "weight")["ip"] == "a"
@@ -121,4 +121,3 @@ def test_naming_list_instances_filters_and_skips_bad_rows():
 def test_naming_list_validation(kwargs):
     with pytest.raises(NacosValidationError):
         list_instances(MagicMock(), {"NACOS_GROUP_NAME": "DEFAULT_GROUP"}, **kwargs)
-

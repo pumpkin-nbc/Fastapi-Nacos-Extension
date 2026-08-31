@@ -7,7 +7,7 @@ from typing import Any, Callable, Dict
 from .exceptions import NacosValidationError
 from .utils import validate_retry_interval, validate_retry_times
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 
 def _sleep(seconds: float) -> None:
@@ -78,5 +78,4 @@ def run_with_retry(
 
 
 __all__ = ["run_with_retry"]
-
 

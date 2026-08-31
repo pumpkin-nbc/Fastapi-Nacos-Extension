@@ -3,7 +3,7 @@
 import asyncio
 import threading
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 from tests.helpers import wait_registered
 
 
@@ -109,7 +109,9 @@ def test_pid_change_rebuilds_runtime_and_client(
     first_client = asyncio.run(extension.get_client(app))
     old_runtime = app.state.nacos["_runtime"]
     old_pid = old_runtime.pid
-    monkeypatch.setattr("fastapi_nacos.lifecycle.current_pid", lambda: old_pid + 1000)
+    monkeypatch.setattr(
+        "fastapi_nacos_extension.lifecycle.current_pid", lambda: old_pid + 1000
+    )
 
     status = extension.get_status(app)
     assert status["pid"] == old_pid + 1000

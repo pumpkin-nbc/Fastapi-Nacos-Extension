@@ -8,7 +8,7 @@ import uuid
 import pytest
 from fastapi import FastAPI
 
-from fastapi_nacos import FastAPINacos
+from fastapi_nacos_extension import FastAPINacos
 
 pytestmark = [
     pytest.mark.integration,
@@ -57,4 +57,3 @@ async def test_register_discover_config_surface_and_deregister():
     finally:
         assert await extension.deregister_instance(app)
         await wait_for(extension, app, "registered", False)
-

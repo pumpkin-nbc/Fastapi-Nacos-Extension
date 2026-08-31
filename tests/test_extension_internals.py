@@ -5,9 +5,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import fastapi_nacos.extension as extension_module
-from fastapi_nacos import FastAPINacos, NacosValidationError
-from fastapi_nacos._recovery import (
+import fastapi_nacos_extension.extension as extension_module
+from fastapi_nacos_extension import FastAPINacos, NacosValidationError
+from fastapi_nacos_extension._recovery import (
     _LifecycleFailure,
     _LifecycleFailureClass,
     _LifecycleFailureStage,
@@ -275,4 +275,3 @@ def test_heartbeat_identity_and_time_helpers(monkeypatch):
     FastAPINacos._clear_heartbeat_observation_locked(runtime)
     assert runtime.heartbeat_state == "not_applicable"
     assert runtime.heartbeat_cycle_started_monotonic is None
-

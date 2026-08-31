@@ -40,7 +40,7 @@ from .logging import (
 from .retry import run_with_retry
 from .utils import validate_retry_interval, validate_retry_times
 
-logger = logging.getLogger("fastapi_nacos")
+logger = logging.getLogger("fastapi_nacos_extension")
 
 EXTENSION_KEY = "nacos"
 _OWNER_KEY = "_extension"
@@ -81,7 +81,7 @@ class _RegistrationSource(Enum):
 
 
 _REGISTRATION_SOURCE_CONTEXT: ContextVar[_RegistrationSource] = ContextVar(
-    "fastapi_nacos_registration_source",
+    "fastapi_nacos_extension_registration_source",
     default=_RegistrationSource.EXPLICIT_REGISTER,
 )
 
