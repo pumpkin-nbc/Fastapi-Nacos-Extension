@@ -14,7 +14,7 @@ post-fork recovery without blocking the ASGI event loop.
 ## Compatibility
 
 - Python 3.8 or newer
-- FastAPI `>=0.112.2,<0.140.0`; Python 3.8 resolves at most 0.124.4
+- FastAPI `>=0.112.2,<1.0.0`; Python 3.8 resolves at most 0.124.4
 - `nacos-sdk-python` 2.0.0 through 2.0.11 (`>=2.0.0,<3.0.0`)
 - Nacos server 2.3.2, matching the reference Flask-Nacos project
 
@@ -137,9 +137,10 @@ Use the repository environment and run the complete gate:
 .venv/Scripts/python -m twine check dist/*
 ```
 
-CI additionally verifies FastAPI 0.125.0 and newer on the Python versions they
-support, up to FastAPI 0.139.2. See the compatibility guide for the complete
-matrix.
+CI additionally verifies every Python minor from 3.8 through 3.14. FastAPI
+boundary releases and the latest tested version, 0.141.1, are selected according
+to each interpreter's supported range. See the compatibility guide for the
+complete matrix.
 
 Integration tests are opt-in and must use a disposable Nacos 2.3.2 instance:
 
