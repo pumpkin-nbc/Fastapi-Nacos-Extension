@@ -148,7 +148,7 @@ def test_health_route_openapi_conflict_and_contract(make_app, patched_create_cli
     operation = client.get("/openapi.json").json()["paths"]["/health/nacos"]["get"]
     assert operation["operationId"].startswith(HEALTH_ENDPOINT)
     extension.init_app(app, config)
-    assert sum(route.name == HEALTH_ENDPOINT for route in app.routes) == 1
+    assert sum(getattr(route, "name", None) == HEALTH_ENDPOINT for route in app.routes) == 1
 
     conflict = FastAPI()
 

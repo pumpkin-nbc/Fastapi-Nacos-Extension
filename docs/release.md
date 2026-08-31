@@ -6,7 +6,7 @@ when:
 
 1. `pyproject.toml`, `fastapi_nacos_extension.__version__`, changelogs and tag agree.
 2. Ruff, mypy, the full pytest suite and branch coverage of at least 85% pass.
-3. FastAPI and SDK compatibility matrix jobs pass on Python 3.8.
+3. The Python 3.8 baseline and the versioned FastAPI/SDK compatibility matrix pass.
 4. wheel/sdist build, Twine metadata checks and archive content checks pass.
 5. the wheel installs and imports in a clean virtual environment.
 
