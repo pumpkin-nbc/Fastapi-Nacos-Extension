@@ -1,4 +1,4 @@
-"""Utility helpers for fastapi-nacos."""
+"""Utility helpers for fastapi-nacos-extension."""
 
 import logging
 import math
@@ -237,4 +237,3 @@ __all__ = [
     "validate_metadata",
     "mask_sensitive",
 ]
-

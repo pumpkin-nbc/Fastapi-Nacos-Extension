@@ -1,4 +1,4 @@
-"""FastAPI-Nacos composes an application's existing lifespan."""
+"""FastAPI-Nacos-Extension composes an application's existing lifespan."""
 
 from contextlib import asynccontextmanager
 

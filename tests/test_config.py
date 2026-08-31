@@ -23,7 +23,7 @@ def test_defaults_and_precedence(make_app):
 
     assert snapshot["NACOS_SERVER_ADDR"] == "app:8848"
     assert snapshot["NACOS_RETRY_TIMES"] == 4
-    assert snapshot["NACOS_LOG_FILENAME"] == "fastapi-nacos.log"
+    assert snapshot["NACOS_LOG_FILENAME"] == "fastapi-nacos-extension.log"
     assert set(DEFAULTS).issubset(snapshot)
 
 

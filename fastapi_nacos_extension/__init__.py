@@ -1,4 +1,4 @@
-"""FastAPI-Nacos: Nacos lifecycle, discovery and configuration for FastAPI."""
+"""FastAPI-Nacos-Extension: Nacos lifecycle, discovery and configuration for FastAPI."""
 
 from .exceptions import (
     FastAPINacosError,

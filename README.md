@@ -1,4 +1,4 @@
-# FastAPI-Nacos
+# FastAPI-Nacos-Extension
 
 [中文说明](README.zh-CN.md) · [Documentation](docs/quickstart.md) · [Changelog](CHANGELOG.md)
 

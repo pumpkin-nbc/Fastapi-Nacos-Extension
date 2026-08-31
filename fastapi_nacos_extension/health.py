@@ -1,4 +1,4 @@
-"""Local-only FastAPI health endpoint for FastAPI-Nacos."""
+"""Local-only FastAPI health endpoint for FastAPI-Nacos-Extension."""
 
 import logging
 from typing import TYPE_CHECKING, Any, Dict
@@ -67,7 +67,7 @@ def register_health_route(app: FastAPI, extension: "FastAPINacos") -> bool:
         methods=["GET"],
         name=HEALTH_ENDPOINT,
         tags=["Nacos"],
-        summary="FastAPI-Nacos local health",
+        summary="FastAPI-Nacos-Extension local health",
     )
     logger.info("Health check route registered (path=%s)", path)
     return True

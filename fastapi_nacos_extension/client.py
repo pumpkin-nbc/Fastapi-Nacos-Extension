@@ -40,7 +40,7 @@ _HeartbeatObserver = Callable[
 
 @dataclass
 class _HeartbeatInstrumentation:
-    """The single FastAPI-Nacos heartbeat wrapper state for one SDK client."""
+    """The single FastAPI-Nacos-Extension heartbeat wrapper state for one SDK client."""
 
     original_send_heartbeat: Callable[..., Any]
     failure_states: Dict[_HeartbeatIdentity, _HeartbeatFailureState]
@@ -247,7 +247,7 @@ def _notify_heartbeat_observer(
 def _install_heartbeat_instrumentation(
     client: Any,
 ) -> Optional[_HeartbeatInstrumentation]:
-    """Install or return the sole FastAPI-Nacos heartbeat wrapper for ``client``."""
+    """Install or return the sole FastAPI-Nacos-Extension heartbeat wrapper for ``client``."""
     existing = _heartbeat_instrumentation(client)
     if existing is not None:
         return existing
@@ -369,7 +369,7 @@ def create_client(config: Dict[str, Any]) -> Any:
     """Create the underlying synchronous Nacos client.
 
     Uses the classic synchronous ``nacos.NacosClient`` from ``nacos-sdk-python``
-    (2.x line). FastAPI-Nacos moves every call to this synchronous surface into
+    (2.x line). FastAPI-Nacos-Extension moves every call to this synchronous surface into
     a worker thread so it cannot block the ASGI event loop. SDK-specific import
     and construction details stay contained here.
     """

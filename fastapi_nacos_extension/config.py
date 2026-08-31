@@ -1,4 +1,4 @@
-"""Default configuration and configuration parsing for fastapi-nacos."""
+"""Default configuration and configuration parsing for fastapi-nacos-extension."""
 
 import logging
 from collections.abc import Mapping as MappingABC
@@ -63,13 +63,13 @@ DEFAULTS: Dict[str, Any] = {
     "NACOS_DISCOVERY_METADATA": {},
     # Instance normalization (0.4.0).
     "NACOS_INSTANCE_NORMALIZE": True,
-    # Safe FastAPI-Nacos logging control. Raw SDK logs stay silent.
+    # Safe FastAPI-Nacos-Extension logging control. Raw SDK logs stay silent.
     "NACOS_LOG_ENABLED": False,
     "NACOS_LOG_LEVEL": "INFO",
     "NACOS_LOG_CONSOLE_ENABLED": True,
     "NACOS_LOG_FILE_ENABLED": True,
     "NACOS_LOG_PATH": "./logs",
-    "NACOS_LOG_FILENAME": "fastapi-nacos.log",
+    "NACOS_LOG_FILENAME": "fastapi-nacos-extension.log",
     "NACOS_LOG_FORMAT": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     "NACOS_LOG_PROPAGATE": True,
     "NACOS_LOG_MAX_BYTES": 10485760,
@@ -81,7 +81,7 @@ def load_config(
     base: Optional[Mapping[str, Any]] = None,
     overrides: Optional[Mapping[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Merge explicit mappings over the FastAPI-Nacos defaults.
+    """Merge explicit mappings over the FastAPI-Nacos-Extension defaults.
 
     ``base`` normally comes from :class:`FastAPINacos` construction and
     ``overrides`` is application-specific input passed to ``init_app``.

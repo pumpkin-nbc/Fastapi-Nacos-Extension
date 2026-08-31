@@ -1,8 +1,8 @@
-"""Custom exception hierarchy for fastapi-nacos."""
+"""Custom exception hierarchy for fastapi-nacos-extension."""
 
 
 class FastAPINacosError(Exception):
-    """Base exception for all fastapi-nacos errors."""
+    """Base exception for all fastapi-nacos-extension errors."""
 
 
 class NacosConfigError(FastAPINacosError):
@@ -47,5 +47,4 @@ __all__ = [
     "NacosDiscoveryError",
     "NacosLoggingError",
 ]
-
 

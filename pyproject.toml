@@ -44,11 +44,11 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/pumpkin-nbc/Fastapi-Nacos"
-Repository = "https://github.com/pumpkin-nbc/Fastapi-Nacos"
-Documentation = "https://github.com/pumpkin-nbc/Fastapi-Nacos/tree/master/docs"
-Issues = "https://github.com/pumpkin-nbc/Fastapi-Nacos/issues"
-Changelog = "https://github.com/pumpkin-nbc/Fastapi-Nacos/blob/master/CHANGELOG.md"
+Homepage = "https://github.com/pumpkin-nbc/Fastapi-Nacos-Extension"
+Repository = "https://github.com/pumpkin-nbc/Fastapi-Nacos-Extension"
+Documentation = "https://github.com/pumpkin-nbc/Fastapi-Nacos-Extension/tree/master/docs"
+Issues = "https://github.com/pumpkin-nbc/Fastapi-Nacos-Extension/issues"
+Changelog = "https://github.com/pumpkin-nbc/Fastapi-Nacos-Extension/blob/master/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["fastapi_nacos_extension"]

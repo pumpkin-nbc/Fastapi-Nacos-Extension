@@ -43,7 +43,7 @@ receives an isolated snapshot; metadata dictionaries are copied.
 | `NACOS_LOG_CONSOLE_ENABLED` | `True` | Add a colored console handler. |
 | `NACOS_LOG_FILE_ENABLED` | `True` | Add a plugin-only file handler. |
 | `NACOS_LOG_PATH` | `./logs` | Log directory. |
-| `NACOS_LOG_FILENAME` | `fastapi-nacos.log` | Log filename without a path. |
+| `NACOS_LOG_FILENAME` | `fastapi-nacos-extension.log` | Log filename without a path. |
 | `NACOS_LOG_FORMAT` | timestamped format | Python logging format. |
 | `NACOS_LOG_PROPAGATE` | `True` | Propagate safe plugin records. |
 | `NACOS_LOG_MAX_BYTES` | `10485760` | Rotation threshold; `0` disables rotation. |
@@ -51,4 +51,3 @@ receives an isolated snapshot; metadata dictionaries are copied.
 
 Registration-only fields are validated only when auto or explicit registration
 is requested. Connection fields are validated locally before client creation.
-

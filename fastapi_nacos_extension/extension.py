@@ -201,7 +201,7 @@ class FastAPINacos:
         app: FastAPI,
         config: Optional[Mapping[str, Any]] = None,
     ) -> None:
-        """Initialize FastAPI-Nacos for ``app`` without constructing a client."""
+        """Initialize FastAPI-Nacos-Extension for ``app`` without constructing a client."""
         with _INIT_LOCK:
             self._init_app_locked(app, config)
 
@@ -935,7 +935,7 @@ class FastAPINacos:
             thread = Thread(
                 target=self._registration_worker,
                 args=(state, runtime),
-                name="fastapi-nacos-registration",
+                name="fastapi-nacos-extension-registration",
                 daemon=True,
             )
         except Exception as exc:

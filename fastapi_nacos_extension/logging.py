@@ -1,6 +1,6 @@
-"""Safe logging configuration for FastAPI-Nacos and nacos-sdk-python.
+"""Safe logging configuration for FastAPI-Nacos-Extension and nacos-sdk-python.
 
-``NACOS_LOG_*`` settings configure only records emitted by FastAPI-Nacos.  The
+``NACOS_LOG_*`` settings configure only records emitted by FastAPI-Nacos-Extension.  The
 classic synchronous Nacos SDK is deliberately isolated because supported 2.x
 versions may log access tokens, authentication request data, and configuration
 content.  SDK records are therefore never forwarded to application handlers.
@@ -21,7 +21,7 @@ DEFAULT_SDK_LOG_PATH = os.path.abspath(
     os.path.expanduser(os.path.join("~", "logs", "nacos", "nacos-client-python.log"))
 )
 DEFAULT_SDK_LOG_DIR = os.path.dirname(DEFAULT_SDK_LOG_PATH)
-FASTAPI_NACOS_LOG_FILENAME = "fastapi-nacos.log"
+FASTAPI_NACOS_LOG_FILENAME = "fastapi-nacos-extension.log"
 DEFAULT_LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 
 _VALID_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
@@ -52,7 +52,7 @@ class _ConsoleColorFormatter(logging.Formatter):
 
 
 def get_log_level(level_name: Any) -> int:
-    """Resolve a textual FastAPI-Nacos log level."""
+    """Resolve a textual FastAPI-Nacos-Extension log level."""
     if not isinstance(level_name, str):
         raise NacosLoggingError(
             "NACOS_LOG_LEVEL must be one of DEBUG, INFO, WARNING, ERROR, or CRITICAL"
@@ -184,7 +184,7 @@ def _mark_owned(handler: logging.Handler, kind: str) -> logging.Handler:
 
 
 def ensure_null_handler(logger: logging.Logger) -> None:
-    """Attach one FastAPI-Nacos-owned ``NullHandler``."""
+    """Attach one FastAPI-Nacos-Extension-owned ``NullHandler``."""
     if any(_handler_type(handler) == "null" for handler in logger.handlers):
         return
     logger.addHandler(_mark_owned(logging.NullHandler(), "null"))
@@ -250,7 +250,9 @@ def add_file_handler_once(
     try:
         logger.addHandler(_create_file_handler(resolved, formatter, level, max_bytes, backup_count))
     except Exception as exc:
-        raise NacosLoggingError("Failed to create FastAPI-Nacos log file handler") from exc
+        raise NacosLoggingError(
+            "Failed to create FastAPI-Nacos-Extension log file handler"
+        ) from exc
     return True
 
 
@@ -308,7 +310,7 @@ def _desired_handlers(settings: Dict[str, Any]) -> List[logging.Handler]:
             for handler in owned:
                 handler.close()
             raise NacosLoggingError(
-                "Failed to create FastAPI-Nacos log file handler"
+                "Failed to create FastAPI-Nacos-Extension log file handler"
             ) from exc
     if not owned:
         owned.append(_mark_owned(logging.NullHandler(), "null"))
@@ -318,7 +320,7 @@ def _desired_handlers(settings: Dict[str, Any]) -> List[logging.Handler]:
 def configure_named_logger(
     logger: logging.Logger, settings: Dict[str, Any], app: Any = None
 ) -> None:
-    """Atomically reconcile one logger to the requested FastAPI-Nacos state."""
+    """Atomically reconcile one logger to the requested FastAPI-Nacos-Extension state."""
     del app
     with _CONFIG_LOCK:
         owned = _desired_handlers(settings)
@@ -355,7 +357,7 @@ def configure_sdk_loggers(_settings: Optional[Dict[str, Any]] = None, app: Any =
 
 
 def configure_logger(app: Any, cfg: Dict[str, Any]) -> None:
-    """Configure safe FastAPI-Nacos logs and isolate raw SDK logs."""
+    """Configure safe FastAPI-Nacos-Extension logs and isolate raw SDK logs."""
     settings = _build_settings(cfg)
     configure_named_logger(logging.getLogger(FASTAPI_NACOS_LOGGER_NAME), settings, app)
     configure_sdk_loggers()

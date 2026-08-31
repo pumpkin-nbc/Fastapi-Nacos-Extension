@@ -30,7 +30,7 @@ async def wait_for(extension, app, key, expected, timeout=10.0):
 
 @pytest.mark.anyio
 async def test_register_discover_config_surface_and_deregister():
-    service_name = "fastapi-nacos-integration-" + uuid.uuid4().hex[:8]
+    service_name = "fastapi-nacos-extension-integration-" + uuid.uuid4().hex[:8]
     app = FastAPI()
     extension = FastAPINacos(
         app,
@@ -53,7 +53,7 @@ async def test_register_discover_config_surface_and_deregister():
             row["ip"] == "127.0.0.1" and row["port"] == 18080
             for row in instances
         )
-        assert await extension.get_config(app, "fastapi-nacos-missing") is None
+        assert await extension.get_config(app, "fastapi-nacos-extension-missing") is None
     finally:
         assert await extension.deregister_instance(app)
         await wait_for(extension, app, "registered", False)

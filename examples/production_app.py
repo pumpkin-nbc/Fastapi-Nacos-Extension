@@ -6,7 +6,7 @@ from fastapi import FastAPI
 
 from fastapi_nacos_extension import FastAPINacos
 
-app = FastAPI(title="FastAPI-Nacos production example")
+app = FastAPI(title="FastAPI-Nacos-Extension production example")
 nacos = FastAPINacos(
     app,
     {

@@ -1,10 +1,10 @@
-"""Minimal FastAPI-Nacos application."""
+"""Minimal FastAPI-Nacos-Extension application."""
 
 from fastapi import FastAPI
 
 from fastapi_nacos_extension import FastAPINacos
 
-app = FastAPI(title="FastAPI-Nacos basic example")
+app = FastAPI(title="FastAPI-Nacos-Extension basic example")
 nacos = FastAPINacos(
     app,
     {
