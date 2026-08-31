@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m ruff check fastapi_nacos tests examples scripts
+      - run: python -m mypy fastapi_nacos
+      - run: python scripts/check_versions.py
+      - run: python -m pytest
+
+  compatibility:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        fastapi: ["0.112.2", "0.124.4"]
+        nacos-sdk: ["2.0.0", "2.0.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: >-
+          python -m pip install -e ".[dev]"
+          "fastapi==${{ matrix.fastapi }}"
+          "nacos-sdk-python==${{ matrix.nacos-sdk }}"
+      - run: python -m pytest
+      - run: python -c "import fastapi, nacos, fastapi_nacos; print(fastapi.__version__, nacos.__file__, fastapi_nacos.__version__)"
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install "build>=1.2,<2" "twine>=5,<6" "tomli>=2,<3"
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - run: python scripts/check_archives.py
+      - run: python -m venv .smoke-venv
+      - run: .smoke-venv/bin/python -m pip install dist/fastapi_nacos-0.1.0-py3-none-any.whl
+      - run: .smoke-venv/bin/python scripts/smoke_import.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fastapi-nacos-0.1.0
+          path: dist/*
+
+  required:
+    name: required
+    if: always()
+    needs: [quality, compatibility, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify every gate
+        env:
+          QUALITY: ${{ needs.quality.result }}
+          COMPATIBILITY: ${{ needs.compatibility.result }}
+          BUILD: ${{ needs.build.result }}
+        run: test "$QUALITY" = success -a "$COMPATIBILITY" = success -a "$BUILD" = success
+
