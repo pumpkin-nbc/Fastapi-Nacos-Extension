@@ -67,12 +67,14 @@ def test_index_preflight_fails_closed_on_network_error(monkeypatch):
 def test_release_workflow_uses_verified_artifact_and_trusted_publishing():
     workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
 
-    assert "workflow_dispatch" not in workflow
+    assert "workflow_dispatch" in workflow
     assert "python scripts/check_release_tag.py" in workflow
+    assert "python scripts/check_index_version.py testpypi" in workflow
     assert "python scripts/check_index_version.py pypi" in workflow
     assert "uses: actions/upload-artifact@v4" in workflow
-    assert workflow.count("uses: actions/download-artifact@v4") == 2
-    assert workflow.count("uses: pypa/gh-action-pypi-publish@release/v1") == 1
+    assert workflow.count("uses: actions/download-artifact@v4") == 3
+    assert workflow.count("uses: pypa/gh-action-pypi-publish@release/v1") == 2
+    assert "name: testpypi" in workflow
     assert "name: pypi" in workflow
     assert "id-token: write" in workflow
     assert "needs:\n      - build\n      - publish-pypi" in workflow

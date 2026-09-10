@@ -12,19 +12,24 @@ when:
 
 ## One-time trusted publisher setup
 
-Create a `pypi` environment in the GitHub repository. Configure a matching
-Trusted Publisher on PyPI, or a Pending Publisher when the project does not
-exist yet, with:
+Create `testpypi` and `pypi` environments in the GitHub repository. Configure
+matching Trusted Publishers on TestPyPI and PyPI, or Pending Publishers when
+the projects do not exist yet, with:
 
 - Owner: `pumpkin-nbc`
 - Repository: `Fastapi-Nacos-Extension`
 - Workflow: `release.yml`
-- Environment: `pypi`
+- Environment: `testpypi` or `pypi`
 - PyPI project name: `fastapi-nacos-extension` (Pending Publisher only)
 
-No PyPI API token is stored in GitHub. Only the isolated PyPI publishing job
-receives `id-token: write`; build and validation remain read-only. The workflow
-does not expose a manual trigger.
+No PyPI API token is stored in GitHub. Only the two isolated publishing jobs
+receive `id-token: write`; build and validation remain read-only.
+
+## TestPyPI rehearsal
+
+Run the Release workflow manually from `master`. The workflow validates and
+builds the distributions, rejects an existing version, and publishes the exact
+verified artifacts to TestPyPI. Manual runs from other branches fail closed.
 
 ## Production release
 

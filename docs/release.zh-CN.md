@@ -4,16 +4,22 @@
 
 ## 首次配置 Trusted Publisher
 
-在 GitHub 仓库中创建 `pypi` Environment，并在 PyPI 配置 Trusted Publisher；
-如果项目尚未创建，则配置同名的 Pending Publisher：
+在 GitHub 仓库中创建 `testpypi` 和 `pypi` Environment，并分别在 TestPyPI、
+PyPI 配置 Trusted Publisher；如果项目尚未创建，则配置同名的 Pending Publisher：
 
 - Owner：`pumpkin-nbc`
 - Repository：`Fastapi-Nacos-Extension`
 - Workflow：`release.yml`
-- Environment：`pypi`
+- Environment：`testpypi` 或 `pypi`
 - PyPI Project Name：`fastapi-nacos-extension`（仅 Pending Publisher 需要）
 
-GitHub 中不保存 PyPI API Token。只有独立的 PyPI 发布任务获得 `id-token: write` 权限，构建与验证任务保持只读。工作流不提供手动触发入口。
+GitHub 中不保存 PyPI API Token。只有两个独立的发布任务获得 `id-token: write`
+权限，构建与验证任务保持只读。
+
+## TestPyPI 预演
+
+在 `master` 分支手动运行 Release 工作流。工作流会完成验证和构建，确认目标版本
+尚不存在，然后把经过验证的同一份产物发布到 TestPyPI；从其他分支手动运行会直接失败。
 
 ## 正式发布
 
