@@ -1,8 +1,8 @@
 FastAPI-Nacos-Extension
 Copyright 2026 Pumpkin
 
-This project is licensed under the GNU General Public License, version 3.
+This project is licensed under the Apache License, Version 2.0.
 
-Portions of this project are adapted from Flask-Nacos, Copyright 2026
-Pumpkin, originally distributed under the Apache License, Version 2.0.
-The original Apache-2.0 attribution and notices are retained here.
+Portions of this project are adapted from a predecessor project, Copyright
+2026 Pumpkin, also distributed under the Apache License, Version 2.0.
+The applicable attribution and notices are retained here.

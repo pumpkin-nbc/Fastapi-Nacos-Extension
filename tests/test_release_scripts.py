@@ -16,6 +16,21 @@ check_index_version = importlib.import_module("check_index_version")
 check_release_tag = importlib.import_module("check_release_tag")
 
 
+def test_project_uses_apache_2_license():
+    project = check_release_tag.tomllib.loads(
+        (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    )["project"]
+    license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
+    notice_text = (ROOT / "NOTICE").read_text(encoding="utf-8")
+
+    assert project["license"] == "Apache-2.0"
+    assert "License :: OSI Approved :: Apache Software License" in project["classifiers"]
+    assert "Apache License" in license_text
+    assert "Version 2.0, January 2004" in license_text
+    assert "GNU GENERAL PUBLIC LICENSE" not in license_text
+    assert "GNU General Public License" not in notice_text
+
+
 def test_release_tag_must_match_declared_version():
     assert check_release_tag.validate_tag("v0.1.0") == "v0.1.0"
     with pytest.raises(ValueError, match="release tag must be"):

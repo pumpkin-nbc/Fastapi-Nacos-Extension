@@ -2,7 +2,8 @@
 
 ## 0.1.0
 
-- 基于 Flask-Nacos 1.1.1 完成首个 FastAPI 版本。
+- 完成首个面向 Nacos 2.x 的生产级 FastAPI 集成版本。
+- 项目采用 Apache License 2.0 开源许可证。
 - 使用 `fastapi-nacos-extension` 发行名和 `fastapi_nacos_extension`
   导入命名空间，避免与 PyPI 上无关的同名项目冲突。
 - 提供异步优先的注册、发现、配置读取和关闭接口。
