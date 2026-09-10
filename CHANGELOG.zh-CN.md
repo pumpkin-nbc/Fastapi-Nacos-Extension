@@ -9,5 +9,5 @@
 - 支持 FastAPI lifespan、本地健康路由以及 app/PID 隔离。
 - 在保持 Python 3.8 最低运行要求的同时，将 FastAPI 兼容测试扩展至
   0.112.2—0.141.1，并连续覆盖 Python 3.8—3.14。
-- 增加 Trusted Publishing：支持标签驱动的 PyPI 自动发布，并使用同一份已验证
-  产物创建 GitHub Release；不提供手动触发入口。
+- 增加 Trusted Publishing：支持 TestPyPI 手动预演、标签驱动的 PyPI 自动发布，
+  并使用同一份已验证产物创建 GitHub Release。

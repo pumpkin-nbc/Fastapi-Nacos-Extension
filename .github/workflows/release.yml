@@ -1,8 +1,9 @@
 name: Release
 
-# Pushing a matching v* tag publishes to PyPI and then creates the
-# corresponding GitHub Release.
+# Manual runs publish a master build to TestPyPI. Pushing a matching v* tag
+# publishes to PyPI and then creates the corresponding GitHub Release.
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*"
@@ -26,7 +27,12 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      - name: Require master for TestPyPI rehearsal
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: test "$GITHUB_REF" = "refs/heads/master"
+
       - name: Require release tag on master
+        if: ${{ github.event_name == 'push' }}
         run: |
           git merge-base --is-ancestor "$GITHUB_SHA" origin/master
           python scripts/check_release_tag.py "$GITHUB_REF_NAME"
@@ -62,7 +68,12 @@ jobs:
           python scripts/smoke_import.py
 
       - name: Reject an existing PyPI version
+        if: ${{ github.event_name == 'push' }}
         run: python scripts/check_index_version.py pypi
+
+      - name: Reject an existing TestPyPI version
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: python scripts/check_index_version.py testpypi
 
       - name: Store verified distributions
         uses: actions/upload-artifact@v4
@@ -71,6 +82,30 @@ jobs:
           path: dist/
           if-no-files-found: error
           retention-days: 7
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/fastapi-nacos-extension
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Download verified distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish distributions to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
 
   publish-pypi:
     name: Publish to PyPI
