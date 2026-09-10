@@ -3,20 +3,13 @@
 import os
 from pathlib import Path
 
-import tomli
-
-from fastapi_nacos_extension import __version__
+from check_release_tag import declared_version
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
-    project = tomli.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    declared = project["project"]["version"]
-    if declared != __version__:
-        raise SystemExit(
-            f"version mismatch: pyproject={declared!r}, package={__version__!r}"
-        )
+    declared = declared_version(ROOT)
     for changelog in ("CHANGELOG.md", "CHANGELOG.zh-CN.md"):
         if declared not in (ROOT / changelog).read_text(encoding="utf-8"):
             raise SystemExit(f"{changelog} does not mention {declared}")

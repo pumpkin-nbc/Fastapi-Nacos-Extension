@@ -14,6 +14,7 @@ if str(SCRIPTS) not in sys.path:
 
 check_index_version = importlib.import_module("check_index_version")
 check_release_tag = importlib.import_module("check_release_tag")
+check_versions = importlib.import_module("check_versions")
 
 
 def test_project_uses_apache_2_license():
@@ -29,6 +30,11 @@ def test_project_uses_apache_2_license():
     assert "Version 2.0, January 2004" in license_text
     assert "GNU GENERAL PUBLIC LICENSE" not in license_text
     assert "GNU General Public License" not in notice_text
+
+
+def test_version_checker_accepts_current_declarations(capsys):
+    check_versions.main()
+    assert capsys.readouterr().out.strip() == "version declarations agree: 0.1.0"
 
 
 def test_release_tag_must_match_declared_version():
