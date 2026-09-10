@@ -1,0 +1,119 @@
+name: Release
+
+# Pushing a matching v* tag publishes to PyPI and then creates the
+# corresponding GitHub Release.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Validate and build distributions
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Require release tag on master
+        run: |
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/master
+          python scripts/check_release_tag.py "$GITHUB_REF_NAME"
+
+      - name: Install release dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Lint and type check
+        run: |
+          python -m ruff check fastapi_nacos_extension tests examples scripts
+          python -m mypy fastapi_nacos_extension
+          python -m compileall -q fastapi_nacos_extension tests examples scripts
+          python -m pip check
+
+      - name: Check project consistency
+        run: python scripts/check_versions.py
+
+      - name: Test
+        run: python -m pytest
+
+      - name: Build clean distributions
+        run: |
+          rm -rf dist build ./*.egg-info
+          python -m build
+
+      - name: Validate distributions
+        run: |
+          python -m twine check --strict dist/*
+          python scripts/check_archives.py
+          python -m pip install --force-reinstall --no-deps dist/*.whl
+          python scripts/smoke_import.py
+
+      - name: Reject an existing PyPI version
+        run: python scripts/check_index_version.py pypi
+
+      - name: Store verified distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish-pypi:
+    name: Publish to PyPI
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/fastapi-nacos-extension
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Download verified distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Create GitHub Release
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+    needs:
+      - build
+      - publish-pypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download verified distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          fail_on_unmatched_files: true
+          generate_release_notes: true
