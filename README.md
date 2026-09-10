@@ -16,7 +16,7 @@ post-fork recovery without blocking the ASGI event loop.
 - Python 3.8 or newer
 - FastAPI `>=0.112.2,<1.0.0`; Python 3.8 resolves at most 0.124.4
 - `nacos-sdk-python` 2.0.0 through 2.0.11 (`>=2.0.0,<3.0.0`)
-- Nacos server 2.3.2, matching the reference Flask-Nacos project
+- Nacos server 2.3.2
 
 ## Installation
 
@@ -151,5 +151,5 @@ NACOS_INTEGRATION=1 .venv/Scripts/python -m pytest -m integration
 
 ## License and provenance
 
-The repository is licensed under GPLv3. It is adapted from Flask-Nacos
-(Apache-2.0); see [NOTICE](NOTICE) for attribution and scope.
+The repository is licensed under Apache License 2.0. Portions are adapted from
+an Apache-2.0-licensed predecessor; see [NOTICE](NOTICE) for attribution and scope.

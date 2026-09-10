@@ -13,7 +13,7 @@
 - Python 3.8 及以上
 - FastAPI `>=0.112.2,<1.0.0`；Python 3.8 自动解析到最高兼容版 0.124.4
 - `nacos-sdk-python>=2.0.0,<3.0.0`，验证 2.0.0 与 2.0.11
-- Nacos 服务端 2.3.2，与参照 Flask-Nacos 项目保持一致
+- Nacos 服务端 2.3.2
 
 CI 还会连续验证 Python 3.8—3.14，并按解释器支持范围选择 FastAPI 边界版本及
 当前最高测试版 0.141.1；完整组合见兼容性文档。
@@ -90,4 +90,4 @@ async def upstream():
 
 ## 许可证与来源
 
-本仓库使用 GPLv3。代码从 Apache-2.0 的 Flask-Nacos 项目适配而来，详情见 [NOTICE](NOTICE)。
+本仓库使用 Apache License 2.0。部分代码适配自采用相同许可证的前序项目，归属及范围详见 [NOTICE](NOTICE)。

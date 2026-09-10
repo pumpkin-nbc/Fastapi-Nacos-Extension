@@ -23,4 +23,4 @@ GitHub 中不保存 PyPI API Token。只有两个独立的发布任务获得 `id
 
 ## 正式发布
 
-将发布提交合并到 `master`，创建与项目版本完全一致的标签（例如 `v0.1.0`）并推送。工作流会自动确认标签提交属于 `master`、标签与声明版本一致且 PyPI 尚无同版本，然后通过 Trusted Publishing 发布。只有 PyPI 发布成功后，才会使用同一份 wheel 和 sdist 创建 GitHub Release。
+将发布提交合并到 `master`，创建与项目版本完全一致的标签（例如 `v0.1.0`）并推送。工作流会自动确认标签提交属于 `master`、标签与声明版本一致且 PyPI 尚无同版本，然后通过 Trusted Publishing 发布经过验证的 wheel 和 sdist。工作流不创建 GitHub Release。
