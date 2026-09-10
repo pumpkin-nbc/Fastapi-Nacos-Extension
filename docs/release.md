@@ -36,5 +36,5 @@ verified artifacts to TestPyPI. Manual runs from other branches fail closed.
 Merge the release commit into `master`, then create and push the exact version
 tag, for example `v0.1.0`. The workflow requires the tagged commit to belong to
 `master`, validates that the tag matches the declared version, rejects an
-existing PyPI version, and publishes through Trusted Publishing. Only after
-PyPI succeeds does it create the GitHub Release with the same wheel and sdist.
+existing PyPI version, and publishes the verified wheel and sdist through
+Trusted Publishing. The workflow does not create a GitHub Release.

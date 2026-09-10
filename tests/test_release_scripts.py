@@ -72,9 +72,10 @@ def test_release_workflow_uses_verified_artifact_and_trusted_publishing():
     assert "python scripts/check_index_version.py testpypi" in workflow
     assert "python scripts/check_index_version.py pypi" in workflow
     assert "uses: actions/upload-artifact@v4" in workflow
-    assert workflow.count("uses: actions/download-artifact@v4") == 3
+    assert workflow.count("uses: actions/download-artifact@v4") == 2
     assert workflow.count("uses: pypa/gh-action-pypi-publish@release/v1") == 2
     assert "name: testpypi" in workflow
     assert "name: pypi" in workflow
     assert "id-token: write" in workflow
-    assert "needs:\n      - build\n      - publish-pypi" in workflow
+    assert "softprops/action-gh-release" not in workflow
+    assert "contents: write" not in workflow
