@@ -229,6 +229,17 @@ def test_fork_hook_marks_state_stale_and_rebuilds_current_runtime(
     assert app.state.nacos["_runtime"] is not old_runtime
 
 
+def test_missing_fork_hook_is_safe(make_app, patched_create_client, monkeypatch):
+    monkeypatch.delattr(extension_module.os, "register_at_fork", raising=False)
+
+    app, config = make_app()
+    extension = FastAPINacos(app, config)
+
+    assert app.state.nacos["_fork_hook_registered"] is False
+    extension.init_app(app, config)
+    assert app.state.nacos["_fork_hook_registered"] is False
+
+
 def test_status_is_available_during_blocked_rpc(
     make_app, patched_create_client, fake_client
 ):
