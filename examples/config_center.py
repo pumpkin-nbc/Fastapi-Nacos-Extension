@@ -19,3 +19,9 @@ nacos = FastAPINacos(
 async def configuration():
     content = await nacos.get_config(app)
     return Response(content=content or "", media_type="text/plain")
+
+
+@app.get("/configuration/sync", response_class=Response)
+def configuration_sync():
+    content = nacos.get_config_sync(app)
+    return Response(content=content or "", media_type="text/plain")

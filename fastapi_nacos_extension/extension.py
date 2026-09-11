@@ -357,7 +357,7 @@ class FastAPINacos:
 
     async def get_client(self, app: FastAPI) -> Any:
         """Return a usable client without blocking the ASGI event loop."""
-        return await run_in_threadpool(self._get_client_sync, app)
+        return await run_in_threadpool(self.get_client_sync, app)
 
     def get_cached_client(self, app: FastAPI) -> Any:
         """Return the current PID's cached client without creating one."""
@@ -371,11 +371,11 @@ class FastAPINacos:
 
     async def register_instance(self, app: FastAPI) -> None:
         """Set the registered target and return after local orchestration."""
-        await run_in_threadpool(self._register_instance_sync, app)
+        await run_in_threadpool(self.register_instance_sync, app)
 
     async def deregister_instance(self, app: FastAPI) -> bool:
         """Set the unregistered target and perform any required RPC off-loop."""
-        return await run_in_threadpool(self._deregister_instance_sync, app)
+        return await run_in_threadpool(self.deregister_instance_sync, app)
 
     async def list_instances(
         self,
@@ -388,7 +388,7 @@ class FastAPINacos:
     ) -> List[Dict[str, Any]]:
         """Discover instances without blocking the ASGI event loop."""
         return await run_in_threadpool(
-            self._list_instances_sync,
+            self.list_instances_sync,
             app,
             service_name,
             group,
@@ -408,7 +408,7 @@ class FastAPINacos:
     ) -> Optional[Dict[str, Any]]:
         """Select one healthy instance without blocking the event loop."""
         return await run_in_threadpool(
-            self._get_one_healthy_instance_sync,
+            self.get_one_healthy_instance_sync,
             app,
             service_name,
             group,
@@ -424,12 +424,12 @@ class FastAPINacos:
         group: Optional[str] = None,
     ) -> Optional[str]:
         """Fetch raw Nacos configuration content off the event loop."""
-        return await run_in_threadpool(self._get_config_sync, app, data_id, group)
+        return await run_in_threadpool(self.get_config_sync, app, data_id, group)
 
-    # -- Synchronous core --------------------------------------------------
+    # -- Public synchronous API and synchronous core -----------------------
 
-    def _get_client_sync(self, app) -> Any:
-        """Return a usable current-PID client, creating it when necessary."""
+    def get_client_sync(self, app: FastAPI) -> Any:
+        """Synchronously return or create the current-PID client."""
         app, state, runtime = self._require_state(app)
         cfg = state["config"]
         if not cfg.get("NACOS_ENABLED", True):
@@ -708,8 +708,8 @@ class FastAPINacos:
 
     # -- Registration lifecycle ------------------------------------------
 
-    def _register_instance_sync(self, app) -> None:
-        """Set the registration target and start non-blocking convergence."""
+    def register_instance_sync(self, app: FastAPI) -> None:
+        """Synchronously submit the registration target for convergence."""
         source = _REGISTRATION_SOURCE_CONTEXT.get()
         context = _RegisterContext(source=source)
         self._prepare_registration(app, context, new_command=True)
@@ -1370,8 +1370,8 @@ class FastAPINacos:
 
     # -- Deregistration lifecycle ----------------------------------------
 
-    def _deregister_instance_sync(self, app) -> bool:
-        """Set the unregistered target and synchronously clean an idle instance."""
+    def deregister_instance_sync(self, app: FastAPI) -> bool:
+        """Synchronously set the unregistered target and clean an idle instance."""
         app, state, runtime = self._require_state(app)
         cfg = state["config"]
         if not cfg.get("NACOS_ENABLED", True):
@@ -1731,7 +1731,7 @@ class FastAPINacos:
 
     # -- Discovery and configuration center -------------------------------
 
-    def _list_instances_sync(
+    def list_instances_sync(
         self,
         app: FastAPI,
         service_name: str,
@@ -1740,7 +1740,7 @@ class FastAPINacos:
         cluster: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> List[Dict[str, Any]]:
-        """Return instances for ``service_name`` using an explicit app."""
+        """Synchronously return instances for ``service_name``."""
         app, state, _ = self._require_state(app)
         state, _, client = self._client_for_operation(app)
         cfg = state["config"]
@@ -1765,7 +1765,7 @@ class FastAPINacos:
         )
         return result if result is not None else []
 
-    def _get_one_healthy_instance_sync(
+    def get_one_healthy_instance_sync(
         self,
         app: FastAPI,
         service_name: str,
@@ -1774,10 +1774,10 @@ class FastAPINacos:
         cluster: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> Optional[Dict[str, Any]]:
-        """Return one healthy instance using the configured strategy."""
+        """Synchronously return one healthy instance using the configured strategy."""
         _, state, _ = self._require_state(app)
         cfg = state["config"]
-        instances = self._list_instances_sync(
+        instances = self.list_instances_sync(
             app,
             service_name,
             group=group,
@@ -1801,13 +1801,13 @@ class FastAPINacos:
             logger.warning("Instance normalization failed (error_type=%s)", type(exc).__name__)
             return None
 
-    def _get_config_sync(
+    def get_config_sync(
         self,
         app: FastAPI,
         data_id: Optional[str] = None,
         group: Optional[str] = None,
     ) -> Optional[str]:
-        """Fetch raw configuration content for the current application."""
+        """Synchronously fetch raw configuration content for the application."""
         app, state, _ = self._require_state(app)
         cfg = state["config"]
         if not cfg.get("NACOS_CONFIG_ENABLED", True):
@@ -2104,7 +2104,7 @@ class FastAPINacos:
     def _require_client(self, app):
         """Private compatibility helper returning a lazy client and config."""
         target_app, state, _ = self._require_state(app)
-        client = self._get_client_sync(target_app)
+        client = self.get_client_sync(target_app)
         if client is None:
             raise FastAPINacosError("Nacos client is disabled")
         return client, state["config"]

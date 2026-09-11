@@ -1,6 +1,6 @@
 # 快速开始
 
-安装 0.1.0 wheel 后可直接使用根目录 README 中的示例。应用工厂模式可复用一个扩展实例：
+安装 0.1.1 wheel 后可直接使用根目录 README 中的示例。应用工厂模式可复用一个扩展实例：
 
 ```python
 from fastapi import FastAPI

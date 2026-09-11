@@ -24,3 +24,14 @@ async def one_payment():
     return await nacos.get_one_healthy_instance(
         app, "payments-api", strategy="weight"
     )
+
+
+@app.get("/payments/sync")
+def payments_sync():
+    return nacos.list_instances_sync(
+        app,
+        "payments-api",
+        healthy_only=True,
+        cluster="BLUE",
+        metadata={"region": "cn-east"},
+    )

@@ -2,7 +2,7 @@
 
 [English](README.md) · [中文文档](docs/quickstart.zh-CN.md) · [更新日志](CHANGELOG.zh-CN.md)
 
-`fastapi-nacos-extension` 0.1.0 是面向生产环境的 FastAPI / Nacos 2.x 类型化插件，提供服务注册与注销、服务发现、配置中心原文读取、本地健康状态、有界优雅关闭以及 fork 后恢复。所有同步 Nacos SDK 调用均在线程池中执行，不阻塞 ASGI 事件循环。
+`fastapi-nacos-extension` 0.1.1 是面向生产环境的 FastAPI / Nacos 2.x 类型化插件，提供服务注册与注销、服务发现、配置中心原文读取、本地健康状态、有界优雅关闭以及 fork 后恢复。异步接口会在线程池中执行同步 Nacos SDK 调用；同步接口则在调用线程中直接执行。
 
 > PyPI 发行名为 `fastapi-nacos-extension`，Python 导入名为
 > `fastapi_nacos_extension`。本项目与公共 PyPI 上已有的
@@ -26,10 +26,10 @@ CI 还会连续验证 Python 3.8—3.14，并按解释器支持范围选择 Fast
 python -m pip install fastapi-nacos-extension
 ```
 
-也可以安装 GitHub Release wheel：
+也可以安装已构建的 wheel：
 
 ```bash
-python -m pip install ./fastapi_nacos_extension-0.1.0-py3-none-any.whl
+python -m pip install ./fastapi_nacos_extension-0.1.1-py3-none-any.whl
 ```
 
 或在源码目录执行 `python -m pip install .`。
@@ -57,14 +57,20 @@ nacos = FastAPINacos(
 @app.get("/upstream")
 async def upstream():
     return await nacos.get_one_healthy_instance(app, "payments-api", strategy="weight")
+
+
+@app.get("/upstream-sync")
+def upstream_sync():
+    return nacos.get_one_healthy_instance_sync(app, "payments-api", strategy="weight")
 ```
 
-初始化阶段只校验本地配置、保存状态和注册路由；Client 创建与网络访问会延迟到应用启动或首次显式异步调用。
+初始化阶段只校验本地配置、保存状态和注册路由；Client 创建与网络访问会延迟到应用启动或首次显式调用。
 
 ## 关键约定
 
 - 配置优先级：内置默认值、构造器配置、`init_app()` 应用配置。
 - 所有应用相关 API 都必须显式传入 `app`，不模拟 Flask 隐式上下文。
+- 网络操作同时提供异步接口和对应的 `_sync` 同步接口；异步路由中应使用异步接口，避免同步调用阻塞事件循环。
 - 状态位于 `app.state.nacos`；同一扩展重复初始化幂等，其他对象占用时明确报错。
 - 自动注册在 lifespan 启动时触发且不等待网络收敛；关闭时按配置执行有界注销。
 - 每应用、每 PID 最多一个生命周期 Worker 和一个 Naming RPC。

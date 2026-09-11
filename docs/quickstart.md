@@ -1,6 +1,6 @@
 # Quick start
 
-Install a 0.1.0 wheel and create the application shown in the root README. A
+Install a 0.1.1 wheel and create the application shown in the root README. A
 factory can keep one extension instance and initialize multiple applications:
 
 ```python

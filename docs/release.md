@@ -1,7 +1,7 @@
 # Release process
 
 The public distribution name is `fastapi-nacos-extension`; the unrelated
-`fastapi-nacos` project remains untouched. A `v0.1.0` release is allowed only
+`fastapi-nacos` project remains untouched. A `v0.1.1` release is allowed only
 when:
 
 1. `pyproject.toml`, `fastapi_nacos_extension.__version__`, changelogs and tag agree.
@@ -34,7 +34,7 @@ verified artifacts to TestPyPI. Manual runs from other branches fail closed.
 ## Production release
 
 Merge the release commit into `master`, then create and push the exact version
-tag, for example `v0.1.0`. The workflow requires the tagged commit to belong to
+tag, for example `v0.1.1`. The workflow requires the tagged commit to belong to
 `master`, validates that the tag matches the declared version, rejects an
 existing PyPI version, and publishes the verified wheel and sdist through
 Trusted Publishing. The workflow does not create a GitHub Release.

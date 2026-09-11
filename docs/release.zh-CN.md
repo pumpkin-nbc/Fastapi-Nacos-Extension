@@ -1,6 +1,6 @@
 # 发布流程
 
-公共发行名为 `fastapi-nacos-extension`，与 PyPI 上无关的 `fastapi-nacos` 项目相互独立。只有在以下条件全部通过时才允许创建 `v0.1.0`：版本一致性、Ruff、mypy、完整 pytest、分支覆盖率至少 85%、Python 3.8 基线及分版本 FastAPI/SDK 兼容矩阵、wheel/sdist 构建、Twine 元数据、包内容及安装冒烟。
+公共发行名为 `fastapi-nacos-extension`，与 PyPI 上无关的 `fastapi-nacos` 项目相互独立。只有在以下条件全部通过时才允许创建 `v0.1.1`：版本一致性、Ruff、mypy、完整 pytest、分支覆盖率至少 85%、Python 3.8 基线及分版本 FastAPI/SDK 兼容矩阵、wheel/sdist 构建、Twine 元数据、包内容及安装冒烟。
 
 ## 首次配置 Trusted Publisher
 
@@ -23,4 +23,4 @@ GitHub 中不保存 PyPI API Token。只有两个独立的发布任务获得 `id
 
 ## 正式发布
 
-将发布提交合并到 `master`，创建与项目版本完全一致的标签（例如 `v0.1.0`）并推送。工作流会自动确认标签提交属于 `master`、标签与声明版本一致且 PyPI 尚无同版本，然后通过 Trusted Publishing 发布经过验证的 wheel 和 sdist。工作流不创建 GitHub Release。
+将发布提交合并到 `master`，创建与项目版本完全一致的标签（例如 `v0.1.1`）并推送。工作流会自动确认标签提交属于 `master`、标签与声明版本一致且 PyPI 尚无同版本，然后通过 Trusted Publishing 发布经过验证的 wheel 和 sdist。工作流不创建 GitHub Release。

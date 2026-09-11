@@ -1,16 +1,23 @@
 # API reference
 
 `FastAPINacos(app=None, config=None)` and `init_app(app, config=None)` are
-synchronous and network-free. The network-capable API is async:
+synchronous and network-free. Every network-capable operation offers matching
+async and synchronous forms:
 
-- `await get_client(app)` lazily returns the PID-local SDK client.
-- `await register_instance(app)` submits a non-blocking registration target.
-- `await deregister_instance(app)` returns whether the unregistered target was accepted/succeeded.
-- `await list_instances(...)` returns filtered instances.
-- `await get_one_healthy_instance(...)` selects `first`, `random`, or `weight`.
-- `await get_config(app, data_id=None, group=None)` returns raw text or `None`.
+- `await get_client(app)` / `get_client_sync(app)`
+- `await register_instance(app)` / `register_instance_sync(app)`
+- `await deregister_instance(app)` / `deregister_instance_sync(app)`
+- `await list_instances(...)` / `list_instances_sync(...)`
+- `await get_one_healthy_instance(...)` / `get_one_healthy_instance_sync(...)`
+- `await get_config(...)` / `get_config_sync(...)`
 
-Local synchronous helpers are `get_cached_client(app)`,
+Both forms have matching arguments, return values, exceptions, and state-machine
+semantics. Async methods move calls to the thread pool and do not block the ASGI
+event loop. `_sync` methods run in the calling thread and are intended for
+synchronous code; do not call them directly from an async route. Registration
+only submits the target in both forms and retains non-blocking convergence.
+
+Additional local synchronous helpers are `get_cached_client(app)`,
 `get_config_snapshot(app)`, `normalize_instance(instance)`, and
 `get_status(app)`.
 
@@ -24,4 +31,3 @@ The package exports `FastAPINacosError`, `NacosConfigError`,
 `NacosClientError`, `NacosValidationError`, `NacosRegistrationError`,
 `NacosDeregistrationError`, `NacosDiscoveryError`, `NacosLoggingError`, and
 `__version__`.
-

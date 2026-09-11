@@ -4,3 +4,7 @@
 returns the exact SDK text. FastAPI-Nacos-Extension intentionally does not parse YAML or
 JSON, mutate application state, or install dynamic listeners. A missing item
 therefore remains distinguishable from parsed data.
+
+Synchronous code can call
+`nacos.get_config_sync(app, "application.yaml", group="DEFAULT_GROUP")` with
+the same return value and error behavior.

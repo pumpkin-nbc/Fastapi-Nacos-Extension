@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+- Adds public synchronous client, registration, deregistration, discovery, and
+  configuration APIs alongside the existing async API.
+- Documents synchronous FastAPI routes and validates the synchronous API in
+  lifecycle, package, and smoke tests.
+
 ## 0.1.0
 
 - Initial production-oriented FastAPI integration for Nacos 2.x.

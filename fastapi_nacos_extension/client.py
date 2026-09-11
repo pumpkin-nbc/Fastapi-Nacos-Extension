@@ -369,9 +369,9 @@ def create_client(config: Dict[str, Any]) -> Any:
     """Create the underlying synchronous Nacos client.
 
     Uses the classic synchronous ``nacos.NacosClient`` from ``nacos-sdk-python``
-    (2.x line). FastAPI-Nacos-Extension moves every call to this synchronous surface into
-    a worker thread so it cannot block the ASGI event loop. SDK-specific import
-    and construction details stay contained here.
+    (2.x line). The extension's async API moves calls to a worker thread; its
+    public sync API runs them in the calling thread. SDK-specific import and
+    construction details stay contained here.
     """
     # The synchronous SDK always prepares ``logDir`` during construction, even
     # when its logger already has a handler. Point it at an existing controlled
