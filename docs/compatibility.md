@@ -15,6 +15,7 @@ The CI compatibility matrix covers:
 
 The integration fixture continues to use Nacos server 2.3.2.
 
-Only the classic synchronous `nacos.NacosClient` API is used. Calls are moved
-to Starlette's worker thread pool. Newer async SDK surfaces are outside 0.1.0.
-Python 3.8 is the syntax and typing baseline, and `py.typed` is included.
+Only the classic synchronous `nacos.NacosClient` API is used. Async extension
+methods move calls to Starlette's worker thread pool; public `_sync` methods run
+them in the calling thread. Newer async SDK surfaces are outside 0.1.0. Python
+3.8 is the syntax and typing baseline, and `py.typed` is included.

@@ -5,7 +5,8 @@
 `fastapi-nacos-extension` 0.1.0 is a typed, production-oriented FastAPI integration for
 Nacos 2.x. It provides process-safe service registration, discovery, raw
 configuration reads, local health status, bounded shutdown deregistration and
-post-fork recovery without blocking the ASGI event loop.
+post-fork recovery. Async methods keep SDK work off the ASGI event loop, while
+matching `_sync` methods support synchronous callers.
 
 > The distribution name is `fastapi-nacos-extension` and the import package is
 > `fastapi_nacos_extension`. This project is unrelated to the existing public
@@ -26,7 +27,7 @@ From PyPI after the first public release:
 python -m pip install fastapi-nacos-extension
 ```
 
-From a release wheel:
+From a built wheel:
 
 ```bash
 python -m pip install ./fastapi_nacos_extension-0.1.0-py3-none-any.whl
@@ -63,6 +64,11 @@ async def upstream():
     return await nacos.get_one_healthy_instance(app, "payments-api", strategy="weight")
 
 
+@app.get("/upstream-sync")
+def upstream_sync():
+    return nacos.get_one_healthy_instance_sync(app, "payments-api", strategy="weight")
+
+
 @app.get("/remote-config")
 async def remote_config():
     return {"content": await nacos.get_config(app, "orders.yaml")}
@@ -70,27 +76,36 @@ async def remote_config():
 
 Run it with `uvicorn app:app --host 0.0.0.0 --port 8000`. Initialization is
 local and lazy: no Nacos client is constructed and no network request is made
-until application startup or the first explicit async operation.
+until application startup or the first explicit operation.
 
 ## Public API
 
-All application-scoped operations take an explicit `FastAPI` instance. The
-synchronous Nacos SDK is always called from a worker thread.
+All application-scoped operations take an explicit `FastAPI` instance. Choose
+the async API in an async context so SDK work runs in a worker thread, or the
+corresponding `_sync` API in synchronous code to run it in the calling thread.
 
 ```python
 FastAPINacos(app=None, config=None)
 init_app(app, config=None)
 await register_instance(app)
+register_instance_sync(app)
 await deregister_instance(app)
+deregister_instance_sync(app)
 await get_client(app)
+get_client_sync(app)
 get_cached_client(app)
 get_config_snapshot(app)
 await list_instances(app, service_name, group=None, healthy_only=True,
                      cluster=None, metadata=None)
+list_instances_sync(app, service_name, group=None, healthy_only=True,
+                    cluster=None, metadata=None)
 await get_one_healthy_instance(app, service_name, group=None, strategy=None,
                                cluster=None, metadata=None)
+get_one_healthy_instance_sync(app, service_name, group=None, strategy=None,
+                              cluster=None, metadata=None)
 normalize_instance(instance)
 await get_config(app, data_id=None, group=None)
+get_config_sync(app, data_id=None, group=None)
 get_status(app)
 ```
 

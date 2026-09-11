@@ -1,4 +1,4 @@
-"""FastAPI integration and public async API tests."""
+"""FastAPI integration and public async/synchronous API tests."""
 
 import asyncio
 import threading
@@ -92,6 +92,37 @@ async def test_public_discovery_selection_and_config(
         "application.yaml", "DEFAULT_GROUP", timeout=5.0
     )
     assert extension.normalize_instance({"ip": "", "port": 1}) is None
+
+
+def test_public_sync_client_lifecycle_discovery_and_config(
+    make_app, patched_create_client, fake_client
+):
+    app, config = make_app({"NACOS_CONFIG_DATA_ID": "application.yaml"})
+    extension = FastAPINacos(app, config)
+
+    assert extension.get_client_sync(app) is fake_client
+    rows = extension.list_instances_sync(
+        app, "orders", cluster="CANARY", metadata={"version": "v2"}
+    )
+    assert [(row["ip"], row["port"]) for row in rows] == [("127.0.0.1", 8001)]
+    chosen = extension.get_one_healthy_instance_sync(app, "orders", strategy="first")
+    assert chosen["port"] == 8000
+    assert extension.get_config_sync(app) == "server:\n  port: 8000\n"
+
+    extension.register_instance_sync(app)
+    wait_registered(extension, app)
+    assert extension.deregister_instance_sync(app) is True
+    wait_registered(extension, app, expected=False)
+
+    for private_name in (
+        "_get_client_sync",
+        "_register_instance_sync",
+        "_deregister_instance_sync",
+        "_list_instances_sync",
+        "_get_one_healthy_instance_sync",
+        "_get_config_sync",
+    ):
+        assert not hasattr(extension, private_name)
 
 
 @pytest.mark.anyio
