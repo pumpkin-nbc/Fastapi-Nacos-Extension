@@ -34,13 +34,13 @@ def test_project_uses_apache_2_license():
 
 def test_version_checker_accepts_current_declarations(capsys):
     check_versions.main()
-    assert capsys.readouterr().out.strip() == "version declarations agree: 0.1.0"
+    assert capsys.readouterr().out.strip() == "version declarations agree: 0.1.1"
 
 
 def test_release_tag_must_match_declared_version():
-    assert check_release_tag.validate_tag("v0.1.0") == "v0.1.0"
+    assert check_release_tag.validate_tag("v0.1.1") == "v0.1.1"
     with pytest.raises(ValueError, match="release tag must be"):
-        check_release_tag.validate_tag("v0.1.1")
+        check_release_tag.validate_tag("v0.1.0")
 
 
 def test_release_tag_rejects_inconsistent_package_version(tmp_path):
@@ -50,7 +50,7 @@ def test_release_tag_rejects_inconsistent_package_version(tmp_path):
     )
     package = tmp_path / "fastapi_nacos_extension"
     package.mkdir()
-    (package / "__init__.py").write_text('__version__ = "0.1.0"\n', encoding="utf-8")
+    (package / "__init__.py").write_text('__version__ = "0.1.1"\n', encoding="utf-8")
     with pytest.raises(ValueError, match="version mismatch"):
         check_release_tag.declared_version(tmp_path)
 
@@ -62,7 +62,7 @@ def test_index_preflight_accepts_missing_version(monkeypatch):
     monkeypatch.setattr(check_index_version, "urlopen", missing)
     assert check_index_version.ensure_version_available("pypi") == (
         "fastapi-nacos-extension",
-        "0.1.0",
+        "0.1.1",
     )
 
 

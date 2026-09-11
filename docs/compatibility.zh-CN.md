@@ -11,4 +11,4 @@ CI 兼容矩阵包括：
 
 集成环境继续固定 Nacos 服务端 2.3.2。
 
-0.1.0 仅使用经典同步 `nacos.NacosClient` API。插件的异步方法通过 Starlette 线程池移出事件循环，公开的 `_sync` 方法则在调用线程中执行。Python 3.8 是语法和类型基线，wheel 包含 `py.typed`。
+0.1.1 仅使用经典同步 `nacos.NacosClient` API。插件的异步方法通过 Starlette 线程池移出事件循环，公开的 `_sync` 方法则在调用线程中执行。Python 3.8 是语法和类型基线，wheel 包含 `py.typed`。

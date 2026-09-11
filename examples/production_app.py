@@ -19,7 +19,7 @@ nacos = FastAPINacos(
         "NACOS_SERVICE_PORT": int(os.getenv("SERVICE_PORT", "8000")),
         "NACOS_SERVICE_GROUP": "DEFAULT_GROUP",
         "NACOS_SERVICE_CLUSTER": os.getenv("SERVICE_CLUSTER", "DEFAULT"),
-        "NACOS_SERVICE_METADATA": {"version": "0.1.0", "pid": str(os.getpid())},
+        "NACOS_SERVICE_METADATA": {"version": "0.1.1", "pid": str(os.getpid())},
         "NACOS_AUTO_REGISTER": True,
         "NACOS_DEREGISTER_ON_EXIT": True,
         "NACOS_RETRY_ENABLED": True,

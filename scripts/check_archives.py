@@ -46,10 +46,10 @@ def check_sdist(path: Path) -> None:
 
 
 def main() -> None:
-    wheels = list(DIST.glob("fastapi_nacos_extension-0.1.0-*.whl"))
-    sdists = list(DIST.glob("fastapi_nacos_extension-0.1.0.tar.gz"))
+    wheels = list(DIST.glob("fastapi_nacos_extension-0.1.1-*.whl"))
+    sdists = list(DIST.glob("fastapi_nacos_extension-0.1.1.tar.gz"))
     if len(wheels) != 1 or len(sdists) != 1:
-        raise SystemExit("expected exactly one 0.1.0 wheel and one sdist")
+        raise SystemExit("expected exactly one 0.1.1 wheel and one sdist")
     check_wheel(wheels[0])
     check_sdist(sdists[0])
     print("archive contents verified")

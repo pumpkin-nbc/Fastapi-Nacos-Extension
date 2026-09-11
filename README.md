@@ -2,7 +2,7 @@
 
 [中文说明](README.zh-CN.md) · [Documentation](docs/quickstart.md) · [Changelog](CHANGELOG.md)
 
-`fastapi-nacos-extension` 0.1.0 is a typed, production-oriented FastAPI integration for
+`fastapi-nacos-extension` 0.1.1 is a typed, production-oriented FastAPI integration for
 Nacos 2.x. It provides process-safe service registration, discovery, raw
 configuration reads, local health status, bounded shutdown deregistration and
 post-fork recovery. Async methods keep SDK work off the ASGI event loop, while
@@ -30,7 +30,7 @@ python -m pip install fastapi-nacos-extension
 From a built wheel:
 
 ```bash
-python -m pip install ./fastapi_nacos_extension-0.1.0-py3-none-any.whl
+python -m pip install ./fastapi_nacos_extension-0.1.1-py3-none-any.whl
 ```
 
 From a local checkout:

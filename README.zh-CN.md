@@ -2,7 +2,7 @@
 
 [English](README.md) · [中文文档](docs/quickstart.zh-CN.md) · [更新日志](CHANGELOG.zh-CN.md)
 
-`fastapi-nacos-extension` 0.1.0 是面向生产环境的 FastAPI / Nacos 2.x 类型化插件，提供服务注册与注销、服务发现、配置中心原文读取、本地健康状态、有界优雅关闭以及 fork 后恢复。异步接口会在线程池中执行同步 Nacos SDK 调用；同步接口则在调用线程中直接执行。
+`fastapi-nacos-extension` 0.1.1 是面向生产环境的 FastAPI / Nacos 2.x 类型化插件，提供服务注册与注销、服务发现、配置中心原文读取、本地健康状态、有界优雅关闭以及 fork 后恢复。异步接口会在线程池中执行同步 Nacos SDK 调用；同步接口则在调用线程中直接执行。
 
 > PyPI 发行名为 `fastapi-nacos-extension`，Python 导入名为
 > `fastapi_nacos_extension`。本项目与公共 PyPI 上已有的
@@ -29,7 +29,7 @@ python -m pip install fastapi-nacos-extension
 也可以安装已构建的 wheel：
 
 ```bash
-python -m pip install ./fastapi_nacos_extension-0.1.0-py3-none-any.whl
+python -m pip install ./fastapi_nacos_extension-0.1.1-py3-none-any.whl
 ```
 
 或在源码目录执行 `python -m pip install .`。
